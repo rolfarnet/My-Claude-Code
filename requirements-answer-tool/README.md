@@ -69,12 +69,12 @@ An AI-powered application that automatically generates answers to client proposa
    **Manual start:**
    ```bash
    cd backend
-   uv run uvicorn app:app --reload --port 8000
+   uv run uvicorn app:app --reload --port 8001
    ```
 
 6. **Access the application**:
-   - Web Interface: http://localhost:8000/app
-   - API Documentation: http://localhost:8000/docs
+   - Web Interface: http://localhost:8001/app
+   - API Documentation: http://localhost:8001/docs
 
 ## Usage Guide
 
@@ -149,7 +149,7 @@ The tool provides a comprehensive REST API:
 - `GET /stats` - System statistics
 - `DELETE /clear-data` - Clear all data
 
-Full API documentation available at: http://localhost:8000/docs
+Full API documentation available at: http://localhost:8001/docs
 
 ## Configuration
 

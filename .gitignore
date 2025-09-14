@@ -1,0 +1,28 @@
+# Environment files
+.env
+*.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Database files
+*.sqlite3
+*.db
+
+# Data directories
+*/data/uploads/
+*/data/chroma_db/
+
+# IDE and tool directories
+.claude/
+.playwright-mcp/
+
+# Temporary files
+nul
+*.tmp
+
+# Email files
+*.email
+*@gmail.com

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anfragen-Antwort-Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Anfragen-Antwort-Tool</h1>
+            <p>Automatisierte Antworten auf Ausschreibungsfragen mit KI und historischen Q&A-Daten</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('upload-questions')">Fragen hochladen</button>
+            <button class="tab-button" onclick="showTab('manage-data')">Historische Daten verwalten</button>
+            <button class="tab-button" onclick="showTab('single-question')">Einzelne Frage</button>
+            <button class="tab-button" onclick="showTab('statistics')">Statistiken</button>
+        </nav>
+
+        <!-- Upload Questions Tab -->
+        <div id="upload-questions" class="tab-content active">
+            <div class="card">
+                <h2>Kundenfragen hochladen</h2>
+                <div class="upload-area" id="excel-upload-area">
+                    <input type="file" id="excel-file" accept=".xlsx,.xls" hidden>
+                    <div class="upload-prompt">
+                        <p>📄 Excel-Datei hier ablegen oder <button onclick="document.getElementById('excel-file').click()">durchsuchen</button></p>
+                        <small>Unterstützte Formate: .xlsx, .xls</small>
+                    </div>
+                </div>
+                <button onclick="downloadTemplate()" class="btn-secondary">Vorlage herunterladen</button>
+            </div>
+
+            <div id="questions-preview" class="card" style="display: none;">
+                <h3>Extrahierte Fragen</h3>
+                <div id="questions-list"></div>
+                <button id="generate-all-btn" onclick="generateAllAnswers()" class="btn-primary">Alle Antworten generieren</button>
+            </div>
+
+            <div id="answers-section" class="card" style="display: none;">
+                <h3>Generierte Antworten</h3>
+                <div id="answers-container"></div>
+                <button onclick="exportAnswers()" class="btn-primary">Ergebnisse exportieren</button>
+            </div>
+        </div>
+
+        <!-- Manage Historical Data Tab -->
+        <div id="manage-data" class="tab-content">
+            <div class="card">
+                <h2>Historische Q&A-Daten hochladen</h2>
+                <div class="upload-area" id="historical-upload-area">
+                    <input type="file" id="historical-files" multiple accept=".xlsx,.xls,.docx,.pdf,.txt" hidden>
+                    <div class="upload-prompt">
+                        <p>📚 Historische Q&A-Dateien hier ablegen oder <button onclick="document.getElementById('historical-files').click()">durchsuchen</button></p>
+                        <small>Unterstützte Formate: Excel, Word, PDF, Textdateien</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="processing-results" class="card" style="display: none;">
+                <h3>Verarbeitungsergebnisse</h3>
+                <div id="results-container"></div>
+            </div>
+
+            <div class="card">
+                <h3>Datenverwaltung</h3>
+                <button onclick="clearAllData()" class="btn-danger">Alle historischen Daten löschen</button>
+                <small>⚠️ Diese Aktion kann nicht rückgängig gemacht werden</small>
+            </div>
+        </div>
+
+        <!-- Single Question Tab -->
+        <div id="single-question" class="tab-content">
+            <div class="card">
+                <h2>Einzelne Frage stellen</h2>
+                <div class="form-group">
+                    <label for="single-question-input">Frage:</label>
+                    <textarea id="single-question-input" placeholder="Geben Sie hier Ihre Frage ein..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="context-input">Kontext (optional):</label>
+                    <textarea id="context-input" placeholder="Zusätzlicher Kontext..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="category-filter">Nach Kategorie filtern:</label>
+                    <select id="category-filter">
+                        <option value="">Alle Kategorien</option>
+                    </select>
+                </div>
+
+                <button onclick="generateSingleAnswer()" class="btn-primary">Antwort generieren</button>
+            </div>
+
+            <div id="single-answer-result" class="card" style="display: none;">
+                <h3>Generierte Antwort</h3>
+                <div id="single-answer-content"></div>
+                <div id="single-answer-sources"></div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="statistics" class="tab-content">
+            <div class="card">
+                <h2>Systemstatistiken</h2>
+                <div id="stats-content">
+                    <div class="stat-item">
+                        <span class="stat-label">Q&A-Paare gesamt:</span>
+                        <span class="stat-value" id="total-qa-pairs">Wird geladen...</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Kategorien:</span>
+                        <span class="stat-value" id="category-count">Wird geladen...</span>
+                    </div>
+                </div>
+                <button onclick="loadStatistics()" class="btn-secondary">Aktualisieren</button>
+            </div>
+
+            <div id="categories-breakdown" class="card">
+                <h3>Kategorien</h3>
+                <div id="categories-list">Wird geladen...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Verarbeitung...</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
